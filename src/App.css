@@ -1,13 +1,13 @@
 body {
   font-family: 'Segoe UI', sans-serif;
-  background-color: #f3ebe8; /* pastel zemin */
+  background-color: #f3ebe8; 
 }
 
 .container {
   max-width: 600px;
   margin: 40px auto;
   text-align: center;
-  background: #fff8f0; /* açık pastel iç arka plan */
+  background: #fff8f0; 
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
