@@ -8,7 +8,6 @@ function App() {
   const [scores, setScores] = useState([]);
   const [newScores, setNewScores] = useState([]);
 
-  // Sayfa açılırken localStorage'dan verileri yükle
   useEffect(() => {
     const saved = localStorage.getItem('scoreData');
     if (saved) {
@@ -21,7 +20,6 @@ function App() {
     }
   }, []);
 
-  // state değiştikçe localStorage güncelle
   useEffect(() => {
     if (mode && playerNames.length > 0) {
       localStorage.setItem(
@@ -141,7 +139,6 @@ function App() {
           />
         ))}
 
-        {/* Ekle ve Bitir butonları yan yana */}
         <div style={{ marginTop: '10px' }}>
           <button onClick={handleAddScores} style={{ marginRight: '10px' }}>
             Ekle
