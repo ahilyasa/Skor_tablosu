@@ -35,7 +35,7 @@ input {
   font-size: 16px;
   width: 80%;
   border-radius: 6px;
-  border: 1px solid #ddd;
+  border: 1px solid #0d0202;
 }
 
 table {
@@ -62,4 +62,3 @@ th, td {
 .low {
   background-color: #d0f5c9;
 }
-

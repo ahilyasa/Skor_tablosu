@@ -8,10 +8,11 @@ function App() {
   const [scores, setScores] = useState([]);
   const [newScores, setNewScores] = useState([]);
 
+  // Sayfa açılırken localStorage'dan verileri yükle
   useEffect(() => {
-    const savedData = localStorage.getItem('scoreData');
-    if (savedData) {
-      const { mode, playerNames, nameInputs, scores } = JSON.parse(savedData);
+    const saved = localStorage.getItem('scoreData');
+    if (saved) {
+      const { mode, playerNames, nameInputs, scores } = JSON.parse(saved);
       setMode(mode);
       setPlayerNames(playerNames);
       setNameInputs(nameInputs);
@@ -20,15 +21,13 @@ function App() {
     }
   }, []);
 
+  // state değiştikçe localStorage güncelle
   useEffect(() => {
-    if (playerNames.length > 0) {
-      const data = {
-        mode,
-        playerNames,
-        nameInputs,
-        scores,
-      };
-      localStorage.setItem('scoreData', JSON.stringify(data));
+    if (mode && playerNames.length > 0) {
+      localStorage.setItem(
+        'scoreData',
+        JSON.stringify({ mode, playerNames, nameInputs, scores })
+      );
     }
   }, [mode, playerNames, nameInputs, scores]);
 
@@ -86,7 +85,8 @@ function App() {
   const getTotalClasses = (totals) => {
     const max = Math.max(...totals);
     const min = Math.min(...totals);
-    return totals.map(total => {
+
+    return totals.map((total) => {
       if (totals.every(t => t === total)) return 'equal';
       if (total === max) return 'high';
       if (total === min) return 'low';
@@ -140,10 +140,28 @@ function App() {
             onChange={e => handleScoreChange(i, e.target.value)}
           />
         ))}
-        <button onClick={handleAddScores}>Ekle</button>
-        <button onClick={handleReset} style={{ backgroundColor: '#f44336', color: 'white' }}>
-          Bitir
-        </button>
+
+        {/* Ekle ve Bitir butonları yan yana */}
+        <div style={{ marginTop: '10px' }}>
+          <button onClick={handleAddScores} style={{ marginRight: '10px' }}>
+            Ekle
+          </button>
+
+          <button
+            onClick={handleReset}
+            style={{
+              backgroundColor: 'red',
+              color: 'white',
+              padding: '10px 20px',
+              fontSize: '16px',
+              borderRadius: '8px',
+              border: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            Bitir
+          </button>
+        </div>
       </div>
 
       <table>
