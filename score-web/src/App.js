@@ -144,7 +144,7 @@ function App() {
         {/* Ekle ve Bitir butonları yan yana */}
         <div style={{ marginTop: '10px' }}>
           <button onClick={handleAddScores} style={{ marginRight: '10px' }}>
-            Ekleme
+            Ekle
           </button>
 
           <button
