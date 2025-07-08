@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [mode, setMode] = useState(null); // 'single' veya 'double'
+  const [mode, setMode] = useState(null);
   const [playerNames, setPlayerNames] = useState([]);
   const [nameInputs, setNameInputs] = useState([]);
   const [scores, setScores] = useState([]);
@@ -55,7 +55,7 @@ function App() {
     const min = Math.min(...totals);
 
     return totals.map((total, index) => {
-      if (totals.every(t => t === total)) return 'equal'; // Hepsi eşitse
+      if (totals.every(t => t === total)) return 'equal';
       if (total === max) return 'high';
       if (total === min) return 'low';
     
