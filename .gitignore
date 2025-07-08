@@ -1,0 +1,9 @@
+# Her şeyi ignore et
+*
+
+# Sadece build klasörünü dahil et
+!build/
+!build/**
+
+# Gitignore dosyasını kendisi de dahil etsin
+!.gitignore
