@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
@@ -7,6 +7,30 @@ function App() {
   const [nameInputs, setNameInputs] = useState([]);
   const [scores, setScores] = useState([]);
   const [newScores, setNewScores] = useState([]);
+
+  useEffect(() => {
+    const savedData = localStorage.getItem('scoreData');
+    if (savedData) {
+      const { mode, playerNames, nameInputs, scores } = JSON.parse(savedData);
+      setMode(mode);
+      setPlayerNames(playerNames);
+      setNameInputs(nameInputs);
+      setScores(scores);
+      setNewScores(Array(playerNames.length).fill(''));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (playerNames.length > 0) {
+      const data = {
+        mode,
+        playerNames,
+        nameInputs,
+        scores,
+      };
+      localStorage.setItem('scoreData', JSON.stringify(data));
+    }
+  }, [mode, playerNames, nameInputs, scores]);
 
   const handleModeSelect = (selectedMode) => {
     setMode(selectedMode);
@@ -40,6 +64,15 @@ function App() {
     setNewScores(Array(playerNames.length).fill(''));
   };
 
+  const handleReset = () => {
+    localStorage.removeItem('scoreData');
+    setMode(null);
+    setPlayerNames([]);
+    setNameInputs([]);
+    setScores([]);
+    setNewScores([]);
+  };
+
   const calculateTotals = () => {
     const totals = Array(playerNames.length).fill(0);
     scores.forEach(row => {
@@ -53,12 +86,10 @@ function App() {
   const getTotalClasses = (totals) => {
     const max = Math.max(...totals);
     const min = Math.min(...totals);
-
-    return totals.map((total, index) => {
+    return totals.map(total => {
       if (totals.every(t => t === total)) return 'equal';
       if (total === max) return 'high';
       if (total === min) return 'low';
-    
       return '';
     });
   };
@@ -110,6 +141,9 @@ function App() {
           />
         ))}
         <button onClick={handleAddScores}>Ekle</button>
+        <button onClick={handleReset} style={{ backgroundColor: '#f44336', color: 'white' }}>
+          Bitir
+        </button>
       </div>
 
       <table>
