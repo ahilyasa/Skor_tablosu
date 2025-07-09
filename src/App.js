@@ -8,6 +8,7 @@ function App() {
   const [scores, setScores] = useState([]);
   const [newScores, setNewScores] = useState([]);
 
+  // Sayfa açılırken localStorage'dan verileri yükle
   useEffect(() => {
     const saved = localStorage.getItem('scoreData');
     if (saved) {
@@ -20,6 +21,7 @@ function App() {
     }
   }, []);
 
+  // state değiştikçe localStorage güncelle
   useEffect(() => {
     if (mode && playerNames.length > 0) {
       localStorage.setItem(
@@ -57,7 +59,7 @@ function App() {
       const n = parseInt(score, 10);
       return isNaN(n) ? 0 : n;
     });
-    setScores(prev => [parsedScores, ...prev]);
+    setScores(prev => [...prev, parsedScores]);
     setNewScores(Array(playerNames.length).fill(''));
   };
 
@@ -139,9 +141,10 @@ function App() {
           />
         ))}
 
+        {/* Ekle ve Bitir butonları yan yana */}
         <div style={{ marginTop: '10px' }}>
           <button onClick={handleAddScores} style={{ marginRight: '10px' }}>
-            Ekle
+            Ekleme
           </button>
 
           <button
@@ -161,12 +164,7 @@ function App() {
         </div>
       </div>
 
-      <table className="total-table">
-        <colgroup>
-          {playerNames.map((_, i) => (
-            <col key={i} style={{ width: `${100 / playerNames.length}%` }} />
-          ))}
-        </colgroup>
+      <table>
         <thead>
           <tr>
             {playerNames.map((name, i) => (
@@ -175,23 +173,6 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            {totals.map((total, i) => (
-              <td key={i} className={totalClasses[i]}>
-                <b>{total}</b>
-              </td>
-            ))}
-          </tr>
-        </tbody>
-      </table>
-
-      <table style={{ marginTop: '10px' }}>
-        <colgroup>
-          {playerNames.map((_, i) => (
-            <col key={i} style={{ width: `${100 / playerNames.length}%` }} />
-          ))}
-        </colgroup>
-        <tbody>
           {scores.map((row, rIndex) => (
             <tr key={rIndex}>
               {row.map((score, cIndex) => (
@@ -199,6 +180,13 @@ function App() {
               ))}
             </tr>
           ))}
+          <tr>
+            {totals.map((total, i) => (
+              <td key={i} className={totalClasses[i]}>
+                <b>{total}</b>
+              </td>
+            ))}
+          </tr>
         </tbody>
       </table>
     </div>
