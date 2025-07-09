@@ -57,7 +57,7 @@ function App() {
       const n = parseInt(score, 10);
       return isNaN(n) ? 0 : n;
     });
-    setScores(prev => [...prev, parsedScores]);
+    setScores(prev => [parsedScores, ...prev]);
     setNewScores(Array(playerNames.length).fill(''));
   };
 
@@ -161,7 +161,12 @@ function App() {
         </div>
       </div>
 
-      <table>
+      <table className="total-table">
+        <colgroup>
+          {playerNames.map((_, i) => (
+            <col key={i} style={{ width: `${100 / playerNames.length}%` }} />
+          ))}
+        </colgroup>
         <thead>
           <tr>
             {playerNames.map((name, i) => (
@@ -170,13 +175,6 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {scores.map((row, rIndex) => (
-            <tr key={rIndex}>
-              {row.map((score, cIndex) => (
-                <td key={cIndex}>{score}</td>
-              ))}
-            </tr>
-          ))}
           <tr>
             {totals.map((total, i) => (
               <td key={i} className={totalClasses[i]}>
@@ -184,6 +182,23 @@ function App() {
               </td>
             ))}
           </tr>
+        </tbody>
+      </table>
+
+      <table style={{ marginTop: '10px' }}>
+        <colgroup>
+          {playerNames.map((_, i) => (
+            <col key={i} style={{ width: `${100 / playerNames.length}%` }} />
+          ))}
+        </colgroup>
+        <tbody>
+          {scores.map((row, rIndex) => (
+            <tr key={rIndex}>
+              {row.map((score, cIndex) => (
+                <td key={cIndex}>{score}</td>
+              ))}
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
